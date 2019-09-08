@@ -22,26 +22,24 @@ def main(stdscr):
     fall_counter = 0
 
     # loop init
-    while key is not ord('q'):
+    while True:
 
         game_window.box()
 
+        # key handler
         next_key = game_window.getch()
-        key = key if next_key == -1 else next_key
+        key = KEY_UP if next_key == -1 else next_key
 
-        moves = {
-            KEY_DOWN: "down",
-            KEY_LEFT: "left",
-            KEY_RIGHT: "right"
-        }
-
-        if key in moves:
-            moves[key]()
-
-        key = KEY_UP
-
+        if key == KEY_DOWN:
+            game_window.addstr('\/')
+        elif key == KEY_LEFT:
+            game_window.addstr('<')
+        elif key == KEY_RIGHT:
+            game_window.addstr('>')
+        elif key == ord('q'):
+            break
 
         stdscr.refresh()
-
+        # game_window.clear()
 if __name__ == "__main__":
     curses.wrapper(main)
