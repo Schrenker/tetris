@@ -2,7 +2,7 @@ import curses
 from curses import KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT
 from figure import Figure
 from game_state import GameField
-from movement_check import is_down_possible
+from movement_check import is_down_possible, move_down
 import consts as const
 
 
@@ -34,17 +34,15 @@ def main(stdscr):
         game_window.clear()
 
         game_window.box()
+        game_field.render_state(game_window)
         counter += 1
-
-        if counter % 3 == 0:
-            if not is_down_possible(figure.shapes, game_field.field):
-                figure.create_new_shape()
-            else:
-                figure.move_down()
 
         if not is_figure_playable:
             is_figure_playable = True
             figure.create_new_shape()
+
+        if counter % 3 == 0:
+            is_figure_playable = move_down(figure, game_field)
 
         figure.render(game_window)
 
@@ -53,10 +51,7 @@ def main(stdscr):
         key = KEY_UP if next_key == -1 else next_key
 
         if key == KEY_DOWN:
-            if not is_down_possible(figure.shapes, game_field.field):
-                figure.create_new_shape()
-            else:
-                figure.move_down()
+            is_figure_playable = move_down(figure, game_field)
         elif key == KEY_LEFT:
             figure.move_left()
             counter += 1
