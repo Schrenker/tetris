@@ -21,8 +21,10 @@ class Figure:
         for coord in self.shapes:
             window.addch(coord[0], coord[1], "X")
 
+    # first coord in shapes is ALWAYS the pivot
     def rotate(self, window):
         for i in range(1, len(self.shapes)):
             x, y = self.shapes[i][1], self.shapes[i][0]
-            self.shapes[i] = [(x - self.shapes[0][1]) + self.shapes[0][0], (y - self.shapes[0][0]) * -1 + self.shapes[0][1]]
+            self.shapes[i] = [(x - self.shapes[0][1]) + self.shapes[0][0],
+                                (y - self.shapes[0][0]) * -1 + self.shapes[0][1]]
             self.render(window)
