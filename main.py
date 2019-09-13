@@ -2,7 +2,7 @@ import curses
 from curses import KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT
 from figure import Figure
 from game_state import GameField
-from movement_check import move_down, move_left, move_right
+from movement_check import move_down, move_left, move_right, rotate
 import consts as const
 
 
@@ -59,7 +59,7 @@ def main(stdscr):
             move_right(figure, game_field)
             counter += 1
         elif key == ord(' '):
-            figure.rotate(game_window)
+            rotate(figure, game_field)
         elif key == ord("q"):
             break
 

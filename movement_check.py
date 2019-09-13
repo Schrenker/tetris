@@ -60,8 +60,29 @@ def is_right_possible(figure, game_field):
 
 
 def rotate(figure, game_field):
-    pass
+    check, temp = is_rotation_possible(figure, game_field)
+    if check:
+        figure.shape = temp
+        return True
+    else:
+        return False
 
 
 def is_rotation_possible(figure, game_field):
-    pass
+    temp = figure.shape[:]
+    # first coord is ALWAYS the pivot
+    for i in range(1, len(temp)):
+        x, y = temp[i][1], temp[i][0]
+        temp[i] = [
+            (x - temp[0][1]) + temp[0][0],
+            (y - temp[0][0]) * -1 + temp[0][1],
+        ]
+    for j in range(len(temp)):
+        if (
+            temp[j][1] >= len(game_field.area[0])
+            or temp[j][1] <= 0 - 1
+            or temp[j][0] >= len(game_field.area)
+            or game_field.area[figure.shape[j][0]][figure.shape[j][1]] == 'X'
+        ):
+            return False, None
+    return True, temp
