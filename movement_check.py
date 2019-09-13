@@ -1,6 +1,3 @@
-import consts as const
-
-
 def move_down(figure, game_field):
     if not is_down_possible(figure, game_field):
         return False
@@ -82,7 +79,7 @@ def is_rotation_possible(figure, game_field):
             temp[j][1] >= len(game_field.area[0])
             or temp[j][1] <= 0 - 1
             or temp[j][0] >= len(game_field.area)
-            or game_field.area[figure.shape[j][0]][figure.shape[j][1]] == 'X'
+            or game_field.area[figure.shape[j][0]][figure.shape[j][1]] == "X"
         ):
             return False, None
     return True, temp

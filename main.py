@@ -16,16 +16,17 @@ def main(stdscr):
     stdscr.nodelay(True)
 
     # game window init
-    game_window = curses.newwin(const.HEIGHT, const.WIDTH, 2, 2)
+    game_window = curses.newwin(const.HEIGHT + 1, const.WIDTH + 1, 2, 2)
     game_window.keypad(1)
     game_window.timeout(450)
 
     # variables init
+    score = 0
     figure = Figure()
     game_field = GameField()
     key = KEY_UP
     next_key = -1
-    counter = 0
+    tempo_counter = 0
     is_figure_playable = False
 
     # loop init
@@ -34,14 +35,15 @@ def main(stdscr):
         game_window.clear()
 
         game_window.box()
+        game_field.check_full_rows()
         game_field.render_state(game_window)
-        counter += 1
+        tempo_counter += 1
 
         if not is_figure_playable:
             is_figure_playable = True
             figure.create_new_shape()
 
-        if counter % 3 == 0:
+        if tempo_counter % 3 == 0:
             is_figure_playable = move_down(figure, game_field)
 
         figure.render(game_window)
@@ -54,10 +56,10 @@ def main(stdscr):
             is_figure_playable = move_down(figure, game_field)
         elif key == KEY_LEFT:
             move_left(figure, game_field)
-            counter += 1
+            tempo_counter += 1
         elif key == KEY_RIGHT:
             move_right(figure, game_field)
-            counter += 1
+            tempo_counter += 1
         elif key == ord(' '):
             rotate(figure, game_field)
         elif key == ord("q"):
