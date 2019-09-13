@@ -2,7 +2,7 @@ import curses
 from curses import KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT
 from figure import Figure
 from game_state import GameField
-from movement_check import is_down_possible, move_down
+from movement_check import move_down, move_left, move_right
 import consts as const
 
 
@@ -53,18 +53,17 @@ def main(stdscr):
         if key == KEY_DOWN:
             is_figure_playable = move_down(figure, game_field)
         elif key == KEY_LEFT:
-            figure.move_left()
+            move_left(figure, game_field)
             counter += 1
         elif key == KEY_RIGHT:
+            move_right(figure, game_field)
             counter += 1
-            figure.move_right()
         elif key == ord(' '):
             figure.rotate(game_window)
         elif key == ord("q"):
             break
 
         game_window.refresh()
-        # curses.napms(const.TIMEOUT)
 
 
 if __name__ == "__main__":
