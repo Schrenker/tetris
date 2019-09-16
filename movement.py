@@ -66,6 +66,8 @@ def rotate(figure, game_field):
 
 
 def is_rotation_possible(figure, game_field):
+    if not figure.rotateable:
+        return False, None
     temp = figure.shape[:]
     # first coord is ALWAYS the pivot
     for i in range(1, len(temp)):
@@ -82,4 +84,6 @@ def is_rotation_possible(figure, game_field):
             or game_field.area[figure.shape[j][0]][figure.shape[j][1]] == "X"
         ):
             return False, None
+    #pivot swap
+    temp[0], temp[1] = temp[1], temp[0]
     return True, temp

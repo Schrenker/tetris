@@ -3,7 +3,7 @@ class Figure:
         pass
 
     def create_new_shape(self, tetromino):
-        self.shape, self.color = tetromino()
+        self.shape, self.color, self.rotateable = tetromino()
 
     def move_down(self):
         for coord in self.shape:

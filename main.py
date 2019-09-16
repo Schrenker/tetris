@@ -3,7 +3,7 @@ import random
 from curses import KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT
 from figure import Figure
 from game_state import GameField
-from movement_check import move_down, move_left, move_right, rotate
+from movement import move_down, move_left, move_right, rotate
 from tetromino import tetrominos
 import consts as const
 
