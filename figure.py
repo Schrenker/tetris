@@ -2,8 +2,8 @@ class Figure:
     def __init__(self):
         pass
 
-    def create_new_shape(self):
-        self.shape = [[1, 5], [0, 5], [2, 5], [1, 6]]
+    def create_new_shape(self, tetromino):
+        self.shape, self.color = tetromino()
 
     def move_down(self):
         for coord in self.shape:
