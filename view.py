@@ -29,7 +29,37 @@ class View:
                 )
         return view
 
-    def render(self, figure, game_state):
+    def render_frame(self, figure, game_state):
+        self.clear()
+        self.render_box()
+        self.__render_figure(figure)
+        self.__render_state(game_state)
+
+    def __render_figure(self, figure):
+        for coord in figure.shape:
+            self.game_window.addch(
+                self.view[coord[0]][coord[1]].upleft[0],
+                self.view[coord[0]][coord[1]].upleft[1],
+                "X",
+            )
+            self.game_window.addch(
+                self.view[coord[0]][coord[1]].upright[0],
+                self.view[coord[0]][coord[1]].upright[1],
+                "X",
+            )
+            self.game_window.addch(
+                self.view[coord[0]][coord[1]].downleft[0],
+                self.view[coord[0]][coord[1]].downleft[1],
+                "X",
+            )
+            self.game_window.addch(
+                self.view[coord[0]][coord[1]].downright[0],
+                self.view[coord[0]][coord[1]].downright[1],
+                "X",
+            )
+
+
+    def __render_state(self, game_state):
         for i in range(const.HEIGHT):
             for j in range(const.WIDTH):
                 if game_state.area[i][j] == "X":
@@ -53,42 +83,7 @@ class View:
                         self.view[i][j].downright[1],
                         "X",
                     )
-        for coord in figure.shape:
-            self.game_window.addch(
-                self.view[coord[0]][coord[1]].upleft[0],
-                self.view[coord[0]][coord[1]].upleft[1],
-                "X",
-            )
-            self.game_window.addch(
-                self.view[coord[0]][coord[1]].upright[0],
-                self.view[coord[0]][coord[1]].upright[1],
-                "X",
-            )
-            self.game_window.addch(
-                self.view[coord[0]][coord[1]].downleft[0],
-                self.view[coord[0]][coord[1]].downleft[1],
-                "X",
-            )
-            self.game_window.addch(
-                self.view[coord[0]][coord[1]].downright[0],
-                self.view[coord[0]][coord[1]].downright[1],
-                "X",
-            )
 
-    # def update_figure_position(self, figure):
-    #     for coord in self.prev_figure_coords:
-    #         self.view[coord[0]][coord[1]].active = False
-    #     for coord in figure.shape:
-    #         self.view[coord[0]][coord[1]].active = True
-    #     self.prev_figure_coords = figure.shape[:]
-    #
-    # def update_game_state(self, game_state):
-    #     for i in range(const.HEIGHT):
-    #         for j in range(const.WIDTH):
-    #             if game_state.area[i][j] == "X":
-    #                 self.view[i][j].active = True
-    #             else:
-    #                 self.view[i][j].active = False
 
     def clear(self):
         self.game_window.clear()
@@ -108,7 +103,6 @@ class View:
 
 class Tile:
     def __init__(self, upleft, upright, downleft, downright):
-        self.active = False
         self.upleft = upleft
         self.upright = upright
         self.downleft = downleft

@@ -23,9 +23,3 @@ class GameState:
                     self.area[j] = self.area[j - 1]
                     i = 0
         return score
-
-    def render_state(self, window):
-        for i in range(len(self.area)):
-            for j in range(len(self.area[0])):
-                if self.area[i][j] == "X":
-                    window.addch(i + 1, j + 1, "X")

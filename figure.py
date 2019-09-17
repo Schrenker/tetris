@@ -1,9 +1,18 @@
+import random
+from tetromino import tetrominos
+
+
 class Figure:
     def __init__(self):
-        pass
+        self.is_figure_playable = False
+        self.next_figure = random.randint(0, 6)
 
-    def create_new_shape(self, tetromino):
-        self.shape, self.color, self.rotateable = tetromino()
+    def create_new_shape(self):
+        self.shape, self.color, self.rotateable = tetrominos[
+            self.next_figure
+        ]()
+        self.next_figure = random.randint(0, 6)
+        self.is_figure_playable = True
 
     def move_down(self):
         for coord in self.shape:
@@ -16,7 +25,3 @@ class Figure:
     def move_right(self):
         for coord in self.shape:
             coord[1] += 1
-
-    def render(self, window):
-        for coord in self.shape:
-            window.addch(coord[0] + 1, coord[1] + 1, "X")
