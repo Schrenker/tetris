@@ -19,4 +19,4 @@ class Figure:
 
     def render(self, window):
         for coord in self.shape:
-            window.addch(coord[0], coord[1], "X")
+            window.addch(coord[0] + 1, coord[1] + 1, "X")

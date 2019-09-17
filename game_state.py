@@ -1,7 +1,7 @@
 import consts as const
 
 
-class GameField:
+class GameState:
     def __init__(self):
         self.area = []
         for i in range(const.HEIGHT):
@@ -28,4 +28,4 @@ class GameField:
         for i in range(len(self.area)):
             for j in range(len(self.area[0])):
                 if self.area[i][j] == "X":
-                    window.addch(i, j, "X")
+                    window.addch(i + 1, j + 1, "X")

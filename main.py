@@ -3,7 +3,7 @@ import random
 import consts as const
 from curses import KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT
 from figure import Figure
-from game_state import GameField
+from game_state import GameState
 from movement import move_down, move_left, move_right, rotate
 from tetromino import tetrominos
 from view import View
@@ -25,7 +25,7 @@ def main(stdscr):
     score = 0
     next_figure = random.randint(0, 6)
     figure = Figure()
-    game_state = GameField()
+    game_state = GameState()
     key = KEY_UP
     next_key = -1
     tempo_counter = 0
@@ -34,16 +34,8 @@ def main(stdscr):
     # loop init
     while True:
 
-        # game_window.clear()
-        # score_window.clear()
         view.clear()
         view.render_box()
-
-        # game_window.box()
-        # score_window.box()
-
-        # score = game_state.check_full_rows(score)
-        # score_window.addstr(1, 1, str(score))
 
         game_state.render_state(view.game_window)
         tempo_counter += 1
@@ -75,8 +67,6 @@ def main(stdscr):
         elif key == ord("q"):
             break
 
-        # game_window.refresh()
-        # score_window.refresh()
         view.refresh()
 
 
