@@ -29,15 +29,18 @@ def main(stdscr):
     key = KEY_UP
     next_key = -1
     tempo_counter = 0
-    is_figure_playable = False
+    is_figure_playable = True
+    figure.create_new_shape(tetrominos[next_figure])
+    next_figure = random.randint(0, 6)
 
     # loop init
     while True:
 
         view.clear()
         view.render_box()
+        view.render(figure, game_state)
 
-        game_state.render_state(view.game_window)
+        # game_state.render_state(view.game_window)
         tempo_counter += 1
 
         if not is_figure_playable:
@@ -48,7 +51,7 @@ def main(stdscr):
         if tempo_counter % 3 == 0:
             is_figure_playable = move_down(figure, game_state)
 
-        figure.render(view.game_window)
+        # figure.render(view.game_window)
 
         # key handler
         next_key = view.game_window.getch()
