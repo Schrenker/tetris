@@ -12,6 +12,7 @@ def main(stdscr):
     curses.noecho()
     curses.cbreak()
     curses.curs_set(0)
+
     curses.start_color()
     curses.use_default_colors()
     curses.init_pair(1, curses.COLOR_RED, curses.COLOR_RED)
@@ -21,8 +22,6 @@ def main(stdscr):
     curses.init_pair(5, curses.COLOR_WHITE, curses.COLOR_WHITE)
     curses.init_pair(6, curses.COLOR_YELLOW, curses.COLOR_YELLOW)
     curses.init_pair(7, curses.COLOR_GREEN, curses.COLOR_GREEN)
-
-
 
 
     stdscr.nodelay(True)

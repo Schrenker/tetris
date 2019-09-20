@@ -19,10 +19,12 @@ class GameState:
 
     def check_full_rows(self):
         combo = 1
-        for i in range(len(self.area) - 1, 0, -1):
+        i = len(self.area) - 1
+        while i >= 0:
             if all(elem[0] == "X" for elem in self.area[i]):
                 self.score += const.SCORE_INCREASE * combo
                 combo += 1
                 for j in range(i, 0, -1):
-                    self.area[j] = self.area[j - 1]
-                    i = 0
+                    self.area[j] = self.area[j - 1].copy()
+            else:
+                i -= 1

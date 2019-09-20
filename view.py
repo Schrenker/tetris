@@ -63,9 +63,11 @@ class View:
             )
 
     def __render_state(self, game_state):
-        for i in range(const.HEIGHT):
+        for i in range(const.HEIGHT - 1, 0, -1):
+            is_row_empty = True
             for j in range(const.WIDTH):
                 if game_state.area[i][j][0] == "X":
+                    is_row_empty = False
                     self.game_window.addstr(
                         self.view[i][j].upleft[0],
                         self.view[i][j].upleft[1],
@@ -90,6 +92,8 @@ class View:
                         "X",
                         curses.color_pair(game_state.area[i][j][1]),
                     )
+            if is_row_empty:
+                return
 
     def clear(self):
         self.game_window.clear()
