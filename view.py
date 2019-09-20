@@ -37,53 +37,59 @@ class View:
 
     def __render_figure(self, figure):
         for coord in figure.shape:
-            self.game_window.addch(
+            self.game_window.addstr(
                 self.view[coord[0]][coord[1]].upleft[0],
                 self.view[coord[0]][coord[1]].upleft[1],
                 "X",
+                curses.color_pair(figure.color),
             )
-            self.game_window.addch(
+            self.game_window.addstr(
                 self.view[coord[0]][coord[1]].upright[0],
                 self.view[coord[0]][coord[1]].upright[1],
                 "X",
+                curses.color_pair(figure.color),
             )
-            self.game_window.addch(
+            self.game_window.addstr(
                 self.view[coord[0]][coord[1]].downleft[0],
                 self.view[coord[0]][coord[1]].downleft[1],
                 "X",
+                curses.color_pair(figure.color),
             )
-            self.game_window.addch(
+            self.game_window.addstr(
                 self.view[coord[0]][coord[1]].downright[0],
                 self.view[coord[0]][coord[1]].downright[1],
                 "X",
+                curses.color_pair(figure.color),
             )
-
 
     def __render_state(self, game_state):
         for i in range(const.HEIGHT):
             for j in range(const.WIDTH):
-                if game_state.area[i][j] == "X":
-                    self.game_window.addch(
+                if game_state.area[i][j][0] == "X":
+                    self.game_window.addstr(
                         self.view[i][j].upleft[0],
                         self.view[i][j].upleft[1],
                         "X",
+                        curses.color_pair(game_state.area[i][j][1]),
                     )
-                    self.game_window.addch(
+                    self.game_window.addstr(
                         self.view[i][j].upright[0],
                         self.view[i][j].upright[1],
                         "X",
+                        curses.color_pair(game_state.area[i][j][1]),
                     )
-                    self.game_window.addch(
+                    self.game_window.addstr(
                         self.view[i][j].downleft[0],
                         self.view[i][j].downleft[1],
                         "X",
+                        curses.color_pair(game_state.area[i][j][1]),
                     )
-                    self.game_window.addch(
+                    self.game_window.addstr(
                         self.view[i][j].downright[0],
                         self.view[i][j].downright[1],
                         "X",
+                        curses.color_pair(game_state.area[i][j][1]),
                     )
-
 
     def clear(self):
         self.game_window.clear()

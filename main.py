@@ -12,6 +12,18 @@ def main(stdscr):
     curses.noecho()
     curses.cbreak()
     curses.curs_set(0)
+    curses.start_color()
+    curses.use_default_colors()
+    curses.init_pair(1, curses.COLOR_RED, curses.COLOR_RED)
+    curses.init_pair(2, curses.COLOR_BLUE, curses.COLOR_BLUE)
+    curses.init_pair(3, curses.COLOR_CYAN, curses.COLOR_CYAN)
+    curses.init_pair(4, curses.COLOR_MAGENTA, curses.COLOR_MAGENTA)
+    curses.init_pair(5, curses.COLOR_WHITE, curses.COLOR_WHITE)
+    curses.init_pair(6, curses.COLOR_YELLOW, curses.COLOR_YELLOW)
+    curses.init_pair(7, curses.COLOR_GREEN, curses.COLOR_GREEN)
+
+
+
 
     stdscr.nodelay(True)
 
@@ -21,7 +33,6 @@ def main(stdscr):
     figure = Figure()
 
     # variables init
-    score = 0
     tempo_counter = 0
 
     # setup
@@ -34,12 +45,11 @@ def main(stdscr):
 
         view.render_frame(figure, game_state)
 
-        tempo_counter += 1
-
         if not figure.is_figure_playable:
             figure.create_new_shape()
-            game_state.check_full_rows(score)
+            game_state.check_full_rows()
 
+        tempo_counter += 1
         if tempo_counter % 3 == 0:
             figure.is_figure_playable = move_down(figure, game_state)
 

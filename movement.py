@@ -10,7 +10,7 @@ def is_down_possible(figure, game_state):
     for i in range(len(figure.shape)):
         if (
             figure.shape[i][0] >= len(game_state.area) - 1
-            or game_state.area[figure.shape[i][0] + 1][figure.shape[i][1]]
+            or game_state.area[figure.shape[i][0] + 1][figure.shape[i][1]][0]
             == "X"
         ):
             game_state.add_figure_to_state(figure)
@@ -30,7 +30,7 @@ def is_left_possible(figure, game_state):
     for i in range(len(figure.shape)):
         if (
             figure.shape[i][1] <= 0
-            or game_state.area[figure.shape[i][0]][figure.shape[i][1] - 1]
+            or game_state.area[figure.shape[i][0]][figure.shape[i][1] - 1][0]
             == "X"
         ):
             return False
@@ -49,7 +49,7 @@ def is_right_possible(figure, game_state):
     for i in range(len(figure.shape)):
         if (
             figure.shape[i][1] >= len(game_state.area[0]) - 1
-            or game_state.area[figure.shape[i][0]][figure.shape[i][1] + 1]
+            or game_state.area[figure.shape[i][0]][figure.shape[i][1] + 1][0]
             == "X"
         ):
             return False
@@ -81,7 +81,7 @@ def is_rotation_possible(figure, game_state):
             temp[j][1] >= len(game_state.area[0])
             or temp[j][1] <= 0 - 1
             or temp[j][0] >= len(game_state.area)
-            or game_state.area[temp[j][0]][temp[j][1]] == "X"
+            or game_state.area[temp[j][0]][temp[j][1]][0] == "X"
         ):
             return False, None
     #pivot swap
