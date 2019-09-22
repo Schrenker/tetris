@@ -1,3 +1,10 @@
+def is_creation_possible(figure, game_state):
+    for coord in figure.shape:
+        if game_state.area[coord[0]][coord[1]][0] == 'X':
+            return False
+    return True
+
+
 def move_down(figure, game_state):
     if not is_down_possible(figure, game_state):
         return False

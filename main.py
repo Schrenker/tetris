@@ -2,7 +2,7 @@ import curses
 from curses import KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT
 from figure import Figure
 from game_state import GameState
-from movement import move_down, move_left, move_right, rotate
+from movement import move_down, move_left, move_right, rotate, is_creation_possible
 from view import View
 
 
@@ -46,6 +46,11 @@ def main(stdscr):
 
         if not figure.is_figure_playable:
             figure.create_new_shape()
+            if not is_creation_possible(figure, game_state):
+                view.render_frame(figure, game_state)
+                view.refresh()
+                curses.napms(1000)
+                break
             game_state.check_full_rows()
 
         tempo_counter += 1
