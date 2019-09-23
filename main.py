@@ -3,7 +3,7 @@ from curses import KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT
 from figure import Figure
 from game_state import GameState
 from movement import move_down, move_left, move_right, rotate, is_creation_possible
-from view import View
+from view.view import View
 
 
 def main(stdscr):
@@ -26,56 +26,60 @@ def main(stdscr):
 
     stdscr.nodelay(True)
 
-    # objects and their properties
+    # create view
     view = View()
-    game_state = GameState()
-    figure = Figure()
 
-    # variables init
-    tempo_counter = 0
-
-    # setup
-    key = KEY_UP
-    next_key = -1
-    figure.create_new_shape()
-
-    # loop init
+    # game loop init
     while True:
 
-        view.render_frame(figure, game_state)
+        game_state = GameState()
+        figure = Figure()
 
-        if not figure.is_figure_playable:
-            figure.create_new_shape()
-            if not is_creation_possible(figure, game_state):
-                view.render_frame(figure, game_state)
-                view.refresh()
-                curses.napms(1000)
+        # variables init
+        tempo_counter = 0
+
+        # setup
+        key = KEY_UP
+        next_key = -1
+        figure.create_new_shape()
+
+    # round loop init
+        while True:
+
+            view.render_frame(figure, game_state)
+
+            if not figure.is_figure_playable:
+                figure.create_new_shape()
+                if not is_creation_possible(figure, game_state):
+                    view.render_frame(figure, game_state)
+                    view.refresh()
+                    curses.napms(1000)
+                    break
+                game_state.check_full_rows()
+
+            tempo_counter += 1
+            if tempo_counter % 3 == 0:
+                figure.is_figure_playable = move_down(figure, game_state)
+
+
+            # key handler
+            next_key = view.game_window.window.getch()
+            key = KEY_UP if next_key == -1 else next_key
+
+            if key == KEY_DOWN:
+                figure.is_figure_playable = move_down(figure, game_state)
+            elif key == KEY_LEFT:
+                move_left(figure, game_state)
+                tempo_counter += 1
+            elif key == KEY_RIGHT:
+                move_right(figure, game_state)
+                tempo_counter += 1
+            elif key == ord(" "):
+                rotate(figure, game_state)
+            elif key == ord("q"):
                 break
-            game_state.check_full_rows()
 
-        tempo_counter += 1
-        if tempo_counter % 3 == 0:
-            figure.is_figure_playable = move_down(figure, game_state)
-
-
-        # key handler
-        next_key = view.game_window.getch()
-        key = KEY_UP if next_key == -1 else next_key
-
-        if key == KEY_DOWN:
-            figure.is_figure_playable = move_down(figure, game_state)
-        elif key == KEY_LEFT:
-            move_left(figure, game_state)
-            tempo_counter += 1
-        elif key == KEY_RIGHT:
-            move_right(figure, game_state)
-            tempo_counter += 1
-        elif key == ord(" "):
-            rotate(figure, game_state)
-        elif key == ord("q"):
-            break
-
-        view.refresh()
+            view.refresh()
 
 
 if __name__ == "__main__":
