@@ -13,11 +13,11 @@ class GameWindow:
         self.prev_figure_coords = [[0, 0]]
 
     def create_tileview(self):
-        view = []
+        game_view = []
         for i in range(const.HEIGHT):
-            view.append([])
+            game_view.append([])
             for j in range(const.WIDTH):
-                view[i].append(
+                game_view[i].append(
                     Tile(
                         [2 * i + 1, 2 * j + 1],
                         [2 * i + 1, 2 * j + 2],
@@ -25,31 +25,27 @@ class GameWindow:
                         [2 * i + 2, 2 * j + 2],
                     )
                 )
-        return view
+        return game_view
 
     def render_figure(self, figure):
         for coord in figure.shape:
             self.window.addstr(
-                self.game_view[coord[0]][coord[1]].upleft[0],
-                self.game_view[coord[0]][coord[1]].upleft[1],
+                *self.game_view[coord[0]][coord[1]].upleft,
                 "X",
                 curses.color_pair(figure.color),
             )
             self.window.addstr(
-                self.game_view[coord[0]][coord[1]].upright[0],
-                self.game_view[coord[0]][coord[1]].upright[1],
+                *self.game_view[coord[0]][coord[1]].upright,
                 "X",
                 curses.color_pair(figure.color),
             )
             self.window.addstr(
-                self.game_view[coord[0]][coord[1]].downleft[0],
-                self.game_view[coord[0]][coord[1]].downleft[1],
+                *self.game_view[coord[0]][coord[1]].downleft,
                 "X",
                 curses.color_pair(figure.color),
             )
             self.window.addstr(
-                self.game_view[coord[0]][coord[1]].downright[0],
-                self.game_view[coord[0]][coord[1]].downright[1],
+                *self.game_view[coord[0]][coord[1]].downright,
                 "X",
                 curses.color_pair(figure.color),
             )
@@ -61,26 +57,22 @@ class GameWindow:
                 if game_state.area[i][j][0] == "X":
                     is_row_empty = False
                     self.window.addstr(
-                        self.game_view[i][j].upleft[0],
-                        self.game_view[i][j].upleft[1],
+                        *self.game_view[i][j].upleft,
                         "X",
                         curses.color_pair(game_state.area[i][j][1]),
                     )
                     self.window.addstr(
-                        self.game_view[i][j].upright[0],
-                        self.game_view[i][j].upright[1],
+                        *self.game_view[i][j].upright,
                         "X",
                         curses.color_pair(game_state.area[i][j][1]),
                     )
                     self.window.addstr(
-                        self.game_view[i][j].downleft[0],
-                        self.game_view[i][j].downleft[1],
+                        *self.game_view[i][j].downleft,
                         "X",
                         curses.color_pair(game_state.area[i][j][1]),
                     )
                     self.window.addstr(
-                        self.game_view[i][j].downright[0],
-                        self.game_view[i][j].downright[1],
+                        *self.game_view[i][j].downright,
                         "X",
                         curses.color_pair(game_state.area[i][j][1]),
                     )
