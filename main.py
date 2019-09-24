@@ -2,7 +2,13 @@ import curses
 from curses import KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT
 from figure import Figure
 from game_state import GameState
-from movement import move_down, move_left, move_right, rotate, is_creation_possible
+from movement import (
+    move_down,
+    move_left,
+    move_right,
+    rotate,
+    is_creation_possible,
+)
 from view.view import View
 
 
@@ -23,14 +29,24 @@ def main(stdscr):
     curses.init_pair(6, curses.COLOR_YELLOW, curses.COLOR_YELLOW)
     curses.init_pair(7, curses.COLOR_GREEN, curses.COLOR_GREEN)
 
-
-    stdscr.nodelay(True)
-
     # create view
     view = View()
 
     # game loop init
     while True:
+
+        stdscr.nodelay(False)
+
+        view.menu_window.instructions()
+        key = view.menu_window.window.getch()
+        if key == ord("q"):
+            break
+
+        stdscr.erase()
+        stdscr.refresh()
+        # setup
+        key = KEY_UP
+        next_key = -1
 
         game_state = GameState()
         figure = Figure()
@@ -38,12 +54,9 @@ def main(stdscr):
         # variables init
         tempo_counter = 0
 
-        # setup
-        key = KEY_UP
-        next_key = -1
         figure.create_new_shape()
 
-    # round loop init
+        # round loop init
         while True:
 
             view.render_frame(figure, game_state)
@@ -51,6 +64,7 @@ def main(stdscr):
             if not figure.is_figure_playable:
                 figure.create_new_shape()
                 if not is_creation_possible(figure, game_state):
+                    # game over here
                     view.render_frame(figure, game_state)
                     view.refresh()
                     curses.napms(1000)
@@ -60,7 +74,6 @@ def main(stdscr):
             tempo_counter += 1
             if tempo_counter % 3 == 0:
                 figure.is_figure_playable = move_down(figure, game_state)
-
 
             # key handler
             next_key = view.game_window.window.getch()
@@ -77,6 +90,8 @@ def main(stdscr):
             elif key == ord(" "):
                 rotate(figure, game_state)
             elif key == ord("q"):
+                stdscr.erase()
+                stdscr.refresh()
                 break
 
             view.refresh()

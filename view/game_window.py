@@ -56,25 +56,26 @@ class GameWindow:
             for j in range(const.WIDTH):
                 if game_state.area[i][j][0] == "X":
                     is_row_empty = False
+                    color = game_state.area[i][j][1]
                     self.window.addstr(
                         *self.game_view[i][j].upleft,
                         "X",
-                        curses.color_pair(game_state.area[i][j][1]),
+                        curses.color_pair(color),
                     )
                     self.window.addstr(
                         *self.game_view[i][j].upright,
                         "X",
-                        curses.color_pair(game_state.area[i][j][1]),
+                        curses.color_pair(color),
                     )
                     self.window.addstr(
                         *self.game_view[i][j].downleft,
                         "X",
-                        curses.color_pair(game_state.area[i][j][1]),
+                        curses.color_pair(color),
                     )
                     self.window.addstr(
                         *self.game_view[i][j].downright,
                         "X",
-                        curses.color_pair(game_state.area[i][j][1]),
+                        curses.color_pair(color),
                     )
             if is_row_empty:
                 return
