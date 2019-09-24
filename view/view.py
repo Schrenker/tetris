@@ -16,6 +16,7 @@ class View:
         self.render_box()
         self.game_window.render_figure(figure)
         self.game_window.render_state(game_state)
+        self.score_window.render_score(game_state.score)
 
     def clear(self):
         self.game_window.window.clear()
