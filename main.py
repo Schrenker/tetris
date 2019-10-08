@@ -11,7 +11,6 @@ from movement import (
 )
 from view.view import View
 
-
 def main(stdscr):
 
     # curses init

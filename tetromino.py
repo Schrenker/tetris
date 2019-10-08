@@ -2,21 +2,21 @@
 
 
 def create_L():
-    L = [[1, 5], [1, 5], [0, 5], [2, 5], [2, 6]]
+    L = [[1, 1], [1, 1], [0, 1], [2, 1], [2, 2]]
     color = 1
     rotateable = True
     return L, color, rotateable
 
 
 def create_J():
-    J = [[1, 5], [1, 5], [0, 5], [2, 5], [2, 4]]
+    J = [[1, 1], [1, 1], [0, 1], [2, 1], [2, 0]]
     color = 2
     rotateable = True
     return J, color, rotateable
 
 
 def create_T():
-    T = [[1, 5], [1, 5], [0, 5], [2, 5], [1, 6]]
+    T = [[1, 1], [1, 1], [0, 1], [2, 1], [1, 2]]
     color = 3
     rotateable = True
     return T, color, rotateable
@@ -26,21 +26,21 @@ def create_T():
 
 
 def create_I():
-    I = [[2, 5], [3, 5], [1, 5], [4, 5]]
+    I = [[2, 1], [3, 1], [1, 1], [0, 1]]
     color = 4
     rotateable = True
     return I, color, rotateable
 
 
 def create_S():
-    S = [[1, 5], [0, 5], [0, 6], [1, 4]]
+    S = [[1, 1], [0, 1], [0, 2], [1, 0]]
     color = 5
     rotateable = True
     return S, color, rotateable
 
 
 def create_Z():
-    Z = [[1, 5], [0, 5], [1, 6], [0, 4]]
+    Z = [[1, 1], [0, 1], [1, 2], [0, 0]]
     color = 6
     rotateable = True
     return Z, color, rotateable
@@ -50,7 +50,7 @@ def create_Z():
 
 
 def create_O():
-    O = [[1, 5], [0, 5], [1, 6], [0, 6]]
+    O = [[1, 1], [0, 1], [1, 2], [0, 2]]
     color = 7
     rotateable = False
     return O, color, rotateable

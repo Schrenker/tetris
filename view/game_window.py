@@ -1,6 +1,6 @@
 import curses
 import consts as const
-from view.tile import Tile
+from view.helper import create_tileview
 
 class GameWindow:
     def __init__(self):
@@ -9,23 +9,9 @@ class GameWindow:
         )
         self.window.keypad(1)
         self.window.timeout(const.TIMEOUT)
-        self.game_view = self.create_tileview()
+        self.game_view = create_tileview(const.HEIGHT, const.WIDTH)
         self.prev_figure_coords = [[0, 0]]
 
-    def create_tileview(self):
-        game_view = []
-        for i in range(const.HEIGHT):
-            game_view.append([])
-            for j in range(const.WIDTH):
-                game_view[i].append(
-                    Tile(
-                        [2 * i + 1, 2 * j + 1],
-                        [2 * i + 1, 2 * j + 2],
-                        [2 * i + 2, 2 * j + 1],
-                        [2 * i + 2, 2 * j + 2],
-                    )
-                )
-        return game_view
 
     def render_figure(self, figure):
         for coord in figure.shape:

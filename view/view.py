@@ -17,6 +17,7 @@ class View:
         self.game_window.render_figure(figure)
         self.game_window.render_state(game_state)
         self.score_window.render_score(game_state.score)
+        self.block_window.render_next_figure(figure.next_figure)
 
     def clear(self):
         self.game_window.window.clear()
@@ -38,3 +39,4 @@ class View:
         self.game_window.window.refresh()
         self.block_window.window.refresh()
         self.score_window.window.refresh()
+

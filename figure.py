@@ -1,4 +1,5 @@
 import random
+import consts as const
 from tetromino import tetrominos
 
 
@@ -11,6 +12,7 @@ class Figure:
         self.shape, self.color, self.rotateable = tetrominos[
             self.next_figure
         ]()
+        self.move_to_middle()
         self.next_figure = random.randint(0, 6)
         self.is_figure_playable = True
 
@@ -25,3 +27,7 @@ class Figure:
     def move_right(self):
         for coord in self.shape:
             coord[1] += 1
+
+    def move_to_middle(self):
+        for coord in self.shape:
+            coord[1] += (const.WIDTH // 2) - 1
