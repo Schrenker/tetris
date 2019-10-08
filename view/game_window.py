@@ -1,6 +1,6 @@
 import curses
 import consts as const
-from view.helper import create_tileview
+from view.tile import create_tileview
 
 class GameWindow:
     def __init__(self):
@@ -9,7 +9,7 @@ class GameWindow:
         )
         self.window.keypad(1)
         self.window.timeout(const.TIMEOUT)
-        self.game_view = create_tileview(const.HEIGHT, const.WIDTH)
+        self.game_view = create_tileview(const.HEIGHT, const.WIDTH, 0, 0)
         self.prev_figure_coords = [[0, 0]]
 
 

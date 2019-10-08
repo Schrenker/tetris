@@ -7,17 +7,17 @@ class Tile:
 
 
 
-def create_tileview(height, width):
+def create_tileview(height, width, offsety, offsetx):
     tileview = []
     for i in range(height):
         tileview.append([])
         for j in range(width):
             tileview[i].append(
                 Tile(
-                    [2 * i + 1, 2 * j + 1],
-                    [2 * i + 1, 2 * j + 2],
-                    [2 * i + 2, 2 * j + 1],
-                    [2 * i + 2, 2 * j + 2],
+                    [2 * i + 1 + offsety, 2 * j + 1 + offsetx],
+                    [2 * i + 1 + offsety, 2 * j + 2 + offsetx],
+                    [2 * i + 2 + offsety, 2 * j + 1 + offsetx],
+                    [2 * i + 2 + offsety, 2 * j + 2 + offsetx],
                 )
             )
     return tileview
