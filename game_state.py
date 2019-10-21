@@ -1,4 +1,5 @@
 import consts as const
+import json
 
 
 class GameState:
@@ -8,7 +9,8 @@ class GameState:
             self.area.append([])
             for j in range(const.WIDTH):
                 self.area[i].append([" ", 0])
-        self.score = 0
+                self.score = 0
+                self.load_score()
 
     def add_figure_to_state(self, figure):
         for i in range(len(figure.shape)):
@@ -28,3 +30,29 @@ class GameState:
                     self.area[j] = self.area[j - 1].copy()
             else:
                 i -= 1
+
+    def load_score(self):
+        with open("./.highscores.json", "r") as f:
+            self.score_table = json.load(f)
+            f.close()
+
+    def save_score(self):
+        with open("./.highscores.json", "w") as f:
+            json.dump(self.score_table, f)
+            f.close()
+
+    def sort_score_table(self):
+        for i in range(10):
+            for j in range(i, 10):
+                if self.score_table[str(i)] < self.score_table[str(j)]:
+                    self.score_table[str(i)], self.score_table[str(j)] = (
+                        self.score_table[str(j)],
+                        self.score_table[str(i)],
+                    )
+
+    def check_final_score(self):
+        # added without trying, fix
+        if self.score > self.score_table["9"][0]:
+            self.score_table["9"][0] = self.score
+            self.sort_score_table()
+        self.save_score()

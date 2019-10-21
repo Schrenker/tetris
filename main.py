@@ -1,3 +1,4 @@
+#!/bin/python
 import curses
 from curses import KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT
 from figure import Figure
@@ -36,7 +37,8 @@ def main(stdscr):
 
         stdscr.nodelay(False)
 
-        view.menu_window.instructions()
+        game_state = GameState()
+        view.menu_window.instructions(game_state)
         key = view.menu_window.window.getch()
         if key == ord("q"):
             break
@@ -47,7 +49,6 @@ def main(stdscr):
         key = KEY_UP
         next_key = -1
 
-        game_state = GameState()
         figure = Figure()
 
         # variables init
@@ -95,6 +96,6 @@ def main(stdscr):
 
             view.refresh()
 
-
+        game_state.check_final_score()
 if __name__ == "__main__":
     curses.wrapper(main)

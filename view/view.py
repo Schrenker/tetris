@@ -40,3 +40,5 @@ class View:
         self.block_window.window.refresh()
         self.score_window.window.refresh()
 
+    def game_over(self, game_state):
+        pass
