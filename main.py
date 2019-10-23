@@ -36,6 +36,9 @@ def main(stdscr):
     while True:
 
         stdscr.nodelay(False)
+        stdscr.erase()
+        stdscr.refresh()
+
 
         game_state = GameState()
         view.menu_window.instructions(game_state)
@@ -45,6 +48,12 @@ def main(stdscr):
 
         stdscr.erase()
         stdscr.refresh()
+
+        view.menu_window.input_name(game_state)
+
+        stdscr.erase()
+        stdscr.refresh()
+
         # setup
         key = KEY_UP
         next_key = -1

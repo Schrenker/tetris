@@ -54,5 +54,6 @@ class GameState:
         # added without trying, fix
         if self.score > self.score_table["9"][0]:
             self.score_table["9"][0] = self.score
+            self.score_table["9"][1] = self.name
             self.sort_score_table()
         self.save_score()
