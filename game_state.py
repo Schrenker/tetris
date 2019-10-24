@@ -4,13 +4,18 @@ import json
 
 class GameState:
     def __init__(self):
+        self.has_died = False
+        self.name = ""
+        self.score = 0
+        self.highest_score = 0
+        self.load_score()
+
+    def generate_play_field(self):
         self.area = []
         for i in range(const.HEIGHT):
             self.area.append([])
             for j in range(const.WIDTH):
                 self.area[i].append([" ", 0])
-                self.score = 0
-                self.load_score()
 
     def add_figure_to_state(self, figure):
         for i in range(len(figure.shape)):
@@ -34,6 +39,7 @@ class GameState:
     def load_score(self):
         with open("./.highscores.json", "r") as f:
             self.score_table = json.load(f)
+            self.highest_score = self.score_table["0"][0]
             f.close()
 
     def save_score(self):
@@ -56,4 +62,5 @@ class GameState:
             self.score_table["9"][0] = self.score
             self.score_table["9"][1] = self.name
             self.sort_score_table()
-        self.save_score()
+            self.save_score()
+        self.has_died = True

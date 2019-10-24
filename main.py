@@ -1,4 +1,5 @@
 #!/bin/python
+
 import curses
 from curses import KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT
 from figure import Figure
@@ -31,28 +32,23 @@ def main(stdscr):
 
     # create view
     view = View()
+    game_state = GameState()
 
     # game loop init
     while True:
 
+        game_state.generate_play_field()
         stdscr.nodelay(False)
-        stdscr.erase()
-        stdscr.refresh()
+        view.stdscr_reset(stdscr)
 
+        view.main_menu(game_state)
+        view.main_menu_controller()
 
-        game_state = GameState()
-        view.menu_window.instructions(game_state)
-        key = view.menu_window.window.getch()
-        if key == ord("q"):
-            break
-
-        stdscr.erase()
-        stdscr.refresh()
+        view.stdscr_reset(stdscr)
 
         view.menu_window.input_name(game_state)
 
-        stdscr.erase()
-        stdscr.refresh()
+        view.stdscr_reset(stdscr)
 
         # setup
         key = KEY_UP
@@ -73,10 +69,7 @@ def main(stdscr):
             if not figure.is_figure_playable:
                 figure.create_new_shape()
                 if not is_creation_possible(figure, game_state):
-                    # game over here
-                    view.render_frame(figure, game_state)
-                    view.refresh()
-                    curses.napms(1000)
+                    view.game_over(figure, game_state)
                     break
                 game_state.check_full_rows()
 
@@ -99,12 +92,10 @@ def main(stdscr):
             elif key == ord(" "):
                 rotate(figure, game_state)
             elif key == ord("q"):
-                stdscr.erase()
-                stdscr.refresh()
+                view.stdscr_reset(stdscr)
                 break
 
             view.refresh()
 
-        game_state.check_final_score()
 if __name__ == "__main__":
     curses.wrapper(main)

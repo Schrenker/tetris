@@ -8,7 +8,7 @@ class MenuWindow:
 
     def instructions(self, game_state):
         self.window.addstr(5, 5, "Press Q to exit")
-        self.window.addstr(6, 5, "Press any other key to start")
+        self.window.addstr(6, 5, "Press enter key to start")
         self.window.addstr(8, 5, "HIGHSCORES:")
         self.window.addstr(10, 5,f"{game_state.score_table['0'][0]}: {game_state.score_table['0'][1]}")
         self.window.addstr(11, 5,f"{game_state.score_table['1'][0]}: {game_state.score_table['1'][1]}")
@@ -23,7 +23,6 @@ class MenuWindow:
 
     def input_name(self, game_state):
         key = None
-        game_state.name = ""
         while key is not ord('\n'):
             self.window.erase()
             self.window.addstr(6, 6, "Please enter your name (max 10 characters):")
@@ -32,8 +31,13 @@ class MenuWindow:
             if 65 <= key <= 90 or 97 <= key <= 122:
                 if len(game_state.name) < 10:
                     game_state.name += chr(key)
-            elif key == 127:
-                game_state.name = game_state.name[:-1]
-            elif key == curses.KEY_ENTER:
-                break
+                elif key == 127:
+                    game_state.name = game_state.name[:-1]
+                elif key == curses.KEY_ENTER and len(game_state.name) > 0:
+                    return
 
+    def game_over_screen(self, game_state):
+        self.window.addstr(3, 5, "YOU LOSE MISERABLY")
+        self.window.addstr(4, 5, f"You are {game_state.name} and you scored: {game_state.score}")
+        game_state.name = ""
+        self.instructions(game_state)
