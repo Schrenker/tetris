@@ -1,5 +1,6 @@
+# functions that are basically shapes library, with predefined colors,
+# coordinates that only require being moved to the middle and rotation check
 # STABLE ROTATION
-
 
 def create_L():
     L = [[1, 1], [1, 1], [0, 1], [2, 1], [2, 2]]
@@ -55,7 +56,9 @@ def create_O():
     rotateable = False
     return O, color, rotateable
 
-
+# this dictionary is being exported, it's basically all shapes packed into one
+# variable. Keys are numbers from 0 to 6, which trivializes randomization
+# process
 tetrominos = {
     0: create_L,
     1: create_J,

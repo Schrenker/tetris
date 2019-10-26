@@ -20,6 +20,7 @@ def main(stdscr):
     curses.cbreak()
     curses.curs_set(0)
 
+    #initialize colors
     curses.start_color()
     curses.use_default_colors()
     curses.init_pair(1, curses.COLOR_RED, curses.COLOR_RED)
@@ -30,17 +31,21 @@ def main(stdscr):
     curses.init_pair(6, curses.COLOR_YELLOW, curses.COLOR_YELLOW)
     curses.init_pair(7, curses.COLOR_GREEN, curses.COLOR_GREEN)
 
-    # create view
+    # create view and game state
     view = View()
     game_state = GameState()
 
-    # game loop init
+    # loop that handles whole game, creating new session every iteration
     while True:
 
-        game_state.generate_play_field()
+
+        # make getch blocking, for menu windows
         stdscr.nodelay(False)
+
+        game_state.generate_play_field()
         view.stdscr_reset(stdscr)
 
+        # main menu
         view.main_menu(game_state)
         view.main_menu_controller()
 
@@ -50,37 +55,49 @@ def main(stdscr):
 
         view.stdscr_reset(stdscr)
 
-        # setup
+        # initialize key variable
         key = KEY_UP
         next_key = -1
 
         figure = Figure()
-
-        # variables init
-        tempo_counter = 0
-
         figure.create_new_shape()
 
-        # round loop init
+        # tempo is a variable that controls speed and flow of falling blocks,
+        # so that you can't hang block forever by wiggling it, and it's doesnt
+        # fall down on every side step
+        tempo_counter = 0
+
+
+        stdscr.nodelay(True)
+
+        # start a new round
         while True:
 
+            # renders a frame, combining figure and state of the game
             view.render_frame(figure, game_state)
 
+            # check if figure reached it's destination, if it did naturally,
+            # spawn a new one, if it's game over, initialize it
             if not figure.is_figure_playable:
                 figure.create_new_shape()
                 if not is_creation_possible(figure, game_state):
                     view.game_over(figure, game_state)
                     break
+                # check if there are any full rows, so they can be removed for
+                # score
                 game_state.check_full_rows()
 
+            #check tempo and move according actions based on it
             tempo_counter += 1
             if tempo_counter % 3 == 0:
                 figure.is_figure_playable = move_down(figure, game_state)
 
-            # key handler
+            # handle key input
             next_key = view.game_window.window.getch()
             key = KEY_UP if next_key == -1 else next_key
 
+            # block that handles input and passes it to movement module for
+            # checking
             if key == KEY_DOWN:
                 figure.is_figure_playable = move_down(figure, game_state)
             elif key == KEY_LEFT:
@@ -95,6 +112,7 @@ def main(stdscr):
                 view.stdscr_reset(stdscr)
                 break
 
+            # clear frame so it's ready for next rendering
             view.refresh()
 
 if __name__ == "__main__":
