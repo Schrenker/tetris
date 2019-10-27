@@ -1,3 +1,6 @@
+# This class is used for graphical representation of blocks. Right now it shows
+# 1x1 tile as 2x2 tiles, but can be easily modified to show any
+# dimension of tiles.
 class Tile:
     def __init__(self, upleft, upright, downleft, downright):
         self.upleft = upleft

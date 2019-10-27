@@ -2,10 +2,13 @@ import curses
 import consts as const
 
 
+# class that handles the non-game menu window. This is what you see between
+# rounds
 class MenuWindow:
     def __init__(self):
         self.window = curses.newwin(const.HEIGHT * 3, const.WIDTH * 5, 0, 0)
 
+    # show score and instructions
     def instructions(self, game_state):
         self.window.addstr(5, 5, "Press Q to exit")
         self.window.addstr(6, 5, "Press enter key to start")
@@ -21,6 +24,8 @@ class MenuWindow:
         self.window.addstr(18, 5,f"{game_state.score_table['8'][0]}: {game_state.score_table['8'][1]}")
         self.window.addstr(19, 5,f"{game_state.score_table['9'][0]}: {game_state.score_table['9'][1]}")
 
+    # this is called just before the round and asks for name. That name is
+    # later used for highscores
     def input_name(self, game_state):
         key = None
         while key is not ord('\n'):
@@ -36,6 +41,8 @@ class MenuWindow:
                 elif key == curses.KEY_ENTER and len(game_state.name) > 0:
                     return
 
+    # This is called after player loses. It's altered start screen with added
+    # score and game over message
     def game_over_screen(self, game_state):
         self.window.addstr(3, 5, "YOU LOSE MISERABLY")
         self.window.addstr(4, 5, f"You are {game_state.name} and you scored: {game_state.score}")

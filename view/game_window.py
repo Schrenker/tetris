@@ -2,6 +2,7 @@ import curses
 import consts as const
 from view.tile import create_tileview
 
+# this is a class that represents window used for playable screen.
 class GameWindow:
     def __init__(self):
         self.window = curses.newwin(
@@ -13,6 +14,8 @@ class GameWindow:
         self.prev_figure_coords = [[0, 0]]
 
 
+    # this method takes coordinates of figure and represents them as tiles from
+    # tile class
     def render_figure(self, figure):
         for coord in figure.shape:
             self.window.addstr(
@@ -36,6 +39,8 @@ class GameWindow:
                 curses.color_pair(figure.color),
             )
 
+    # this method grabs game state field and represents all "dead" cells as
+    # objects from tile class
     def render_state(self, game_state):
         for i in range(const.HEIGHT - 1, 0, -1):
             is_row_empty = True

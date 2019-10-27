@@ -68,6 +68,7 @@ def main(stdscr):
         tempo_counter = 0
 
 
+        # unblock getch
         stdscr.nodelay(True)
 
         # start a new round
