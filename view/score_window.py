@@ -2,6 +2,7 @@ import curses
 import consts as const
 
 
+# this basic class is used to handle window with current score
 class ScoreWindow:
     def __init__(self):
         self.window = curses.newwin(10, 20, 13, const.WIDTH * 2 + 4)

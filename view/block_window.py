@@ -4,6 +4,7 @@ from tetromino import tetrominos
 from view.tile import create_tileview
 
 
+# this is class representing window that shows next block
 class BlockWindow:
     def __init__(self):
         self.window = curses.newwin(12, 10, 1, const.WIDTH * 2 + 4)
